@@ -1,6 +1,8 @@
 # Overview
+This app is a distributed shell. 
 
-A console app to:
-1) Run local commands
-
-2) Run commands from a server <---- Comming soon!
+This shell will have the ability to: 
+- run local commands
+- pull commands from a server, and run those commands local
+- run commands on a server, and pull the results
+- pipe commands 
