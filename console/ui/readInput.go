@@ -1,13 +1,15 @@
-package services
+package ui
 
 import (
 	"bufio"
 	"fmt"
 	"os"
 	"strings"
+
+	"github.com/horvatic/ratnicka-konzola/console/commandProcessor"
 )
 
-func Ui() {
+func ReadInput() {
 	reader := bufio.NewReader(os.Stdin)
 
 	for {
@@ -24,8 +26,7 @@ func Ui() {
 			break
 		}
 
-		command := strings.Split(userInput, " ")
-		execCommand(command)
+		commandProcessor.ExecCommands(userInput)
 	}
 
 }
