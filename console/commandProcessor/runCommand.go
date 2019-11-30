@@ -8,17 +8,12 @@ import (
 	"os/exec"
 )
 
-type systemCommand struct {
-	cmd    *exec.Cmd
-	writer *io.PipeWriter
-}
-
 func execPipeCommands(commands []*userInputCommand) {
-	var cmds []systemCommand
+	var cmds []*systemCommand
 	var currentReadPipe *io.PipeReader
 	var buffer bytes.Buffer
 	for index, command := range commands {
-		systemCmd := systemCommand{cmd: exec.Command(command.inputCommand, command.options...)}
+		systemCmd := newSystemCommand(exec.Command(command.inputCommand, command.options...))
 		if index > 0 {
 			systemCmd.cmd.Stdin = currentReadPipe
 		} else {
