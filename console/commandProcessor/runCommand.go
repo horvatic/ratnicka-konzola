@@ -8,12 +8,14 @@ import (
 	"os/exec"
 )
 
-func execPipeCommands(commands []*userInputCommand) {
+func execPipeCommands(commands []*userInputCommand, pwd string) {
 	var cmds []*systemCommand
 	var currentReadPipe *io.PipeReader
 	var buffer bytes.Buffer
 	for index, command := range commands {
-		systemCmd := newSystemCommand(exec.Command(command.inputCommand, command.options...))
+		cmd := exec.Command(command.inputCommand, command.options...)
+		cmd.Dir = pwd
+		systemCmd := newSystemCommand(cmd)
 		if index > 0 {
 			systemCmd.cmd.Stdin = currentReadPipe
 		} else {
@@ -48,8 +50,9 @@ func execPipeCommands(commands []*userInputCommand) {
 	}
 }
 
-func execCommand(command *userInputCommand) {
+func execCommand(command *userInputCommand, pwd string) {
 	cmd := exec.Command(command.inputCommand, command.options...)
+	cmd.Dir = pwd
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
 	err := cmd.Run()

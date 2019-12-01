@@ -7,13 +7,17 @@ import (
 	"strings"
 
 	"github.com/horvatic/ratnicka-konzola/console/commandProcessor"
+	"github.com/horvatic/ratnicka-konzola/console/customCommands"
+	"github.com/horvatic/ratnicka-konzola/console/path"
 )
 
-func ReadInput() {
+func Start() {
+
+	pwd := path.InitPath()
 	reader := bufio.NewReader(os.Stdin)
 
 	for {
-		fmt.Print("% ")
+		fmt.Printf("%s& ", pwd)
 		userInput, _ := reader.ReadString('\n')
 
 		userInput = strings.Replace(userInput, "\n", "", -1)
@@ -22,11 +26,16 @@ func ReadInput() {
 			continue
 		}
 
+		if strings.HasPrefix(userInput, "cd") {
+			pwd = customCommands.Cd(userInput, pwd)
+			continue
+		}
+
 		if strings.ToLower(userInput) == "exit" {
 			break
 		}
 
-		commandProcessor.ExecCommands(userInput)
+		commandProcessor.ExecCommands(userInput, pwd)
 	}
 
 }

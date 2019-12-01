@@ -1,19 +1,19 @@
 package commandProcessor
 
-func execNonPipe(userInput string) {
+func execNonPipe(userInput string, pwd string) {
 	command := parseNonPipeCommand(userInput)
-	execCommand(command)
+	execCommand(command, pwd)
 }
 
-func execPipe(userInput string) {
+func execPipe(userInput string, pwd string) {
 	commands := parsePipeCommand(userInput)
-	execPipeCommands(commands)
+	execPipeCommands(commands, pwd)
 }
 
-func ExecCommands(userInput string) {
+func ExecCommands(userInput string, pwd string) {
 	if containsPipes(userInput) {
-		execPipe(userInput)
+		execPipe(userInput, pwd)
 	} else {
-		execNonPipe(userInput)
+		execNonPipe(userInput, pwd)
 	}
 }

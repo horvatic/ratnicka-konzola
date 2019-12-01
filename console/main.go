@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	ui.ReadInput()
+	ui.Start()
 }
