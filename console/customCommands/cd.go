@@ -37,7 +37,7 @@ func Cd(userInput string, currentPwd string) string {
 		return pwd
 	}
 
-	fmt.Printf("Not a valid path: %s", pwd)
+	fmt.Printf("Not a valid path: %s\n", pwd)
 	return currentPwd
 
 }
