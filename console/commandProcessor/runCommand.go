@@ -4,6 +4,8 @@ import (
 	"bytes"
 	"fmt"
 	"io"
+	"io/ioutil"
+	"net/http"
 	"os"
 	"os/exec"
 )
@@ -55,6 +57,16 @@ func runCommandList(cmds []*systemCommand, finalOutBuffer *bytes.Buffer) {
 			io.Copy(os.Stdout, finalOutBuffer)
 		}
 	}
+}
+
+func execStreamCommand(command *userInputCommand, pwd string) {
+	resp, err := http.Post("http://127.0.0.1:8080/", "text/plain", bytes.NewBuffer([]byte(command.inputCommand)))
+	if err != nil {
+		// handle error
+	}
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	fmt.Println(string(body))
 }
 
 func execCommand(command *userInputCommand, pwd string) {

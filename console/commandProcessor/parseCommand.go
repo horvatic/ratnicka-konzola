@@ -6,6 +6,7 @@ import (
 )
 
 const Pipe = "|"
+const Stream = "->"
 
 func splitCommand(userInput string) []string {
 	space := regexp.MustCompile(`\s+`)
@@ -38,6 +39,15 @@ func buildOptions(userOptions []string) []string {
 	return options
 }
 
+func parseStreamCommand(userInput string) *userInputCommand {
+	input := strings.Replace(userInput, "-> ", "", -1)
+	command := splitCommand(input)
+	if len(command) == 1 {
+		return newUserInputCommand(command[0], nil)
+	}
+	return newUserInputCommand(command[0], buildOptions(command[1:]))
+}
+
 func parseNonPipeCommand(userInput string) *userInputCommand {
 	command := splitCommand(userInput)
 	if len(command) == 1 {
@@ -63,4 +73,8 @@ func parsePipeCommand(userInput string) []*userInputCommand {
 
 func containsPipes(command string) bool {
 	return strings.Contains(command, Pipe)
+}
+
+func containsStreams(command string) bool {
+	return strings.Contains(command, Stream)
 }
