@@ -1,5 +1,5 @@
 # Overview
-This app will become a distributed shell. 
+This app is a distributed shell. 
 
 ## Current State
 This shell has the ability to: 
